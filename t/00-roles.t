@@ -164,7 +164,7 @@ subtest 'WhatIs' => sub {
         };
         subtest 'Prefix Imperative' => sub {
             my $wi = wi_with_test {
-                groups => ['imperative'],
+                groups => ['prefix', 'imperative'],
                 options => {
                     command => qr/lower ?case|lc/i,
                 },
