@@ -34,19 +34,12 @@ subtest 'WhatIs' => sub {
         };
     }
 
-    sub entry_builder {
-        my $func = shift;
-        return sub {
-            my $options = shift;
-            no strict 'refs';
-            my $f = \&{"WhatIsTester::$func"};
-            my $wi = $f->(%{$options});
-            isa_ok($wi, 'DDG::GoodieRole::WhatIs::Base', "$func");
-            return $wi;
-        };
+    sub wi_with_test {
+        my $options = shift;
+        my $wi = WhatIsTester::wi_custom(%{$options});
+        isa_ok($wi, 'DDG::GoodieRole::WhatIs::Base', 'wi_custom');
+        return $wi;
     }
-    sub wi_with_test { entry_builder('wi_custom')->(@_) };
-    sub get_trans_with_test { entry_builder('wi_translation')->(@_) };
 
     sub add_valid_queries {
         my ($name, %queries) = @_;
@@ -140,7 +133,6 @@ subtest 'WhatIs' => sub {
         };
     }
     sub test_custom { modifier_test(\&wi_with_test)->(@_) };
-    sub test_translation { modifier_test(\&get_trans_with_test)->(@_) };
 
     sub hash_tester {
         my $hashf = shift;
@@ -154,7 +146,6 @@ subtest 'WhatIs' => sub {
         };
     }
 
-    sub wi_translation_tests { hash_tester(\&test_translation)->(@_) }
     sub wi_custom_tests { hash_tester(\&test_custom)->(@_) }
 
 #######################################################################
@@ -251,27 +242,28 @@ subtest 'WhatIs' => sub {
 #                                Tests                                #
 #######################################################################
 
-    subtest 'Translations' => wi_translation_tests(
+    subtest 'Translations' => wi_custom_tests(
         'What is conversion' => {
             use_options      => ['to'],
+            use_groups       => ['translation'],
             modifiers        => ['what is conversion'],
             ignore           => 'conversion in with translation',
         },
         'Spoken' => {
             use_options => ['to'],
-            use_groups  => ['spoken'],
+            use_groups  => ['translation', 'spoken'],
             modifiers   => ['spoken translation', 'what is conversion'],
             ignore      => 'conversion in with translation',
         },
         'Written' => {
             use_options => ['to'],
-            use_groups  => ['written'],
+            use_groups  => ['translation', 'written'],
             modifiers   => ['written translation', 'what is conversion'],
             ignore      => 'conversion in with translation',
         },
         'Written and Spoken' => {
             use_options => ['to'],
-            use_groups  => ['written', 'spoken'],
+            use_groups  => ['translation', 'written', 'spoken'],
             modifiers   => ['spoken translation',
                             'written translation',
                             'what is conversion'],
@@ -279,27 +271,27 @@ subtest 'WhatIs' => sub {
         },
         'Language' => {
             use_options => ['to'],
-            use_groups  => ['language'],
+            use_groups  => ['translation', 'language'],
             modifiers   => ['language translation', 'what is conversion'],
             ignore      => qr/^what is/i,
         },
         'Language from' => {
             use_options => ['from'],
-            use_groups  => ['language', 'from'],
+            use_groups  => ['translation', 'language', 'from'],
             modifiers   => ['language translation from'],
             ignore      => ['conversion in with translation',
                             qr/^translate/i],
         },
         'Language with conversion to' => {
             use_options => ['to'],
-            use_groups  => ['language', 'conversion', 'to'],
+            use_groups  => ['translation', 'language', 'conversion', 'to'],
             modifiers   => ['language translation',
                             'conversion to'],
             ignore      => qr/^how| (in|to) /i,
         },
         'Conversion in with Translation (Priority Check)' => {
             use_options => ['to'],
-            use_groups  => ['conversion', 'in'],
+            use_groups  => ['translation', 'conversion', 'in'],
             modifiers   => ['conversion in',
                             'conversion in with translation'],
             ignore      => qr/^what is|in/i,
