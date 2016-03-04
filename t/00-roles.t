@@ -60,7 +60,8 @@ subtest 'WhatIs' => sub {
         my %opt_queries = map {
             my $response = $queries{$_};
             if (defined $response) {
-                my %opts = (%{$options}, primary => $response);
+                my %opts = (%{$options}, ref $response eq 'HASH'
+                    ? %{$response} : (primary => $response));
                 $_ => \%opts;
             } else {
                 $_ => undef;
@@ -158,6 +159,21 @@ subtest 'WhatIs' => sub {
         "what is bar in Goatee"     => 'bar',
         "What is Goatee in Goatee?" => "Goatee",
     );
+    add_option_queries 'what is conversion (unit)' =>
+        { direction => 'to' }, (
+        'what is hello meters in Goatee' => {
+            unit    => 'meters',
+            primary => 'hello',
+        },
+        'what is 5 m in Goatee' => {
+            unit    => 'm',
+            primary => '5',
+        },
+        'what is 5m in Goatee?' => {
+            unit    => 'm',
+            primary => '5',
+        },
+    );
     add_option_queries 'spoken translation' =>
         { direction => 'to' }, (
         "How do I say foo in Goatee?"           => 'foo',
@@ -210,9 +226,18 @@ subtest 'WhatIs' => sub {
     );
     add_option_queries 'conversion to (unit)' =>
         { direction => 'to' }, (
-        'hello meters to Goatee' => 'hello',
-        'convert 5 m to Goatee'  => '5',
-        '5m to Goatee'           => '5',
+        'hello meters to Goatee' => {
+            unit    => 'meters',
+            primary => 'hello',
+        },
+        'convert 5 m to Goatee'  => {
+            unit    => 'm',
+            primary => '5',
+        },
+        '5m to Goatee'           => {
+            unit    => 'm',
+            primary => '5',
+        },
     );
     add_option_queries 'conversion in with translation' =>
         { direction => 'to' }, (
@@ -263,19 +288,31 @@ subtest 'WhatIs' => sub {
             use_options      => ['to'],
             use_groups       => ['translation'],
             modifiers        => ['what is conversion'],
+            ignore           => ['conversion in with translation',
+                                 'what is conversion (unit)',
+                                ],
+        },
+        'What is conversion (unit)' => {
+            use_options      => ['to', 'unit'],
+            use_groups       => ['translation'],
+            modifiers        => ['what is conversion (unit)'],
             ignore           => 'conversion in with translation',
         },
         'Spoken' => {
             use_options => ['to'],
             use_groups  => ['translation', 'spoken'],
             modifiers   => ['spoken translation', 'what is conversion'],
-            ignore      => 'conversion in with translation',
+            ignore      => ['conversion in with translation',
+                            'what is conversion (unit)',
+                           ],
         },
         'Written' => {
             use_options => ['to'],
             use_groups  => ['translation', 'written'],
             modifiers   => ['written translation', 'what is conversion'],
-            ignore      => 'conversion in with translation',
+            ignore      => ['conversion in with translation',
+                            'what is conversion (unit)',
+                           ],
         },
         'Written and Spoken' => {
             use_options => ['to'],
@@ -283,7 +320,9 @@ subtest 'WhatIs' => sub {
             modifiers   => ['spoken translation',
                             'written translation',
                             'what is conversion'],
-            ignore      => 'conversion in with translation',
+            ignore      => ['conversion in with translation',
+                            'what is conversion (unit)',
+                           ],
         },
         'Language' => {
             use_options => ['to'],
