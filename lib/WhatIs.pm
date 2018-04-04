@@ -28,10 +28,9 @@ WhatIs - abstracts query matching
 
 =head1 SYNOPSIS
 
-Including it in your Goodie:
+Basic import:
 
-    use DDG::Goodie;
-    with 'WhatIs';
+    use WhatIs qw(wi);
 
 Creating matchers:
 
