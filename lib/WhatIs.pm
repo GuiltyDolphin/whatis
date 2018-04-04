@@ -499,27 +499,16 @@ The supported groups are covered in L</Modifiers>.
 
 =head1 EXAMPLES
 
-This is an example of a Goodie that takes English and translates
-it to a made-up language called 'Goatee'.
+This is a simple example program that takes lines from STDIN, and
+prints out whether there was a match or not. If there was a match,
+the (primary) value of the match is also printed.
 
 The aim is for queries such as "How do I write X in Goatee?",
 "What is X in Goatee?", and so forth to be matched.
 
-    use DDG::Goodie;
-    # To be able to use 'WhatIs' we need import it!
-    with 'WhatIs';
+    #!/usr/bin/env perl
 
-    # We don't know *exactly* where 'goatee' will turn up in our
-    # query, so we use the 'any' trigger.
-    triggers any => 'goatee';
-
-    zci is_cached   => 1;
-    zci answer_type => 'goatee';
-
-    sub english_to_goatee {
-        # Hello -> baah baah baah baah baah
-        return $_[0] =~ s/\w/baah /gr;
-    }
+    use WhatIs qw(wi);
 
     # To be able to match queries such as "How do I say..." and
     # "How do I write...", we need to use the 'verb translation'
@@ -540,37 +529,35 @@ The aim is for queries such as "How do I write X in Goatee?",
         },
     );
 
-    # We use the 'query' handle so that we have a normalized query
-    # with the trigger intact.
-    handle query => sub {
+    # Check the input text, and return a string describing
+    # the match result.
+    sub check_line {
         # First we retrieve the query for matching.
-        my $query = $_;
+        my ($query) = @_;
 
         # We use the 'full_match' method to ensure the whole of the
         # query is matched - we exit early if the query is invalid.
         #
         # $match will be a reference to a hash if the query matches.
-        my $match = $matcher->full_match($query) or return;
+        my $match = $matcher->full_match($query) or return 'No match';
 
         # 'primary' is the main result from the match, this is what
-        # we'll want to translate.
-        my $to_translate = $match->{primary};
+        # we'll want to output.
+        my $primary = $match->{primary};
 
         # Now we can do with our result what we please.
-        my $result = english_to_goatee $to_translate;
+        return "Matched: $primary";
+    }
 
-        return $result,
-            structured_answer => {
-               data => {
-                   title    => "$result",
-                   subtitle => "Translate $to_translate to Goatee",
-               },
-               templates => {
-                   group  => 'text',
-                   moreAt => 0,
-               },
-            };
-    };
+    sub main {
+        print "Enter queries like 'How do I say X in Goatee?'\n";
+        while (chomp (my $query = <>)) {
+            my $res = check_line($query);
+            print "$res\n";
+        }
+    }
+
+    main;
 
 =head1 AUTHOR
 
