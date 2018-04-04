@@ -8,7 +8,7 @@ use Test::Most;
 my %wi_valid_queries = ();
 subtest 'WhatIs' => sub {
 
-    { package WhatIsTester; use Moo; with 'DDG::GoodieRole::WhatIs'; 1; }
+    { package WhatIsTester; use Moo; with 'WhatIs'; 1; }
 
     subtest 'Initialization' => sub {
         new_ok('WhatIsTester', [], 'Applied to a class');
@@ -36,7 +36,7 @@ subtest 'WhatIs' => sub {
     sub wi_with_test {
         my $options = shift;
         my $wi = WhatIsTester::wi(%{$options});
-        isa_ok($wi, 'DDG::GoodieRole::WhatIs::Matcher', 'wi');
+        isa_ok($wi, 'WhatIs::Matcher', 'wi');
         return $wi;
     }
 

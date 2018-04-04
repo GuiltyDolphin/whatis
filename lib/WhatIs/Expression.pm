@@ -1,4 +1,4 @@
-package DDG::GoodieRole::WhatIs::Expression;
+package WhatIs::Expression;
 # ABSTRACT: Allow building of regular expressions in an intuitive
 # manner.
 
@@ -98,19 +98,19 @@ sub append_spaced {
 
 sub expr {
     my $options = shift;
-    if (ref $options eq 'DDG::GoodieRole::WhatIs::Expression') {
-        return DDG::GoodieRole::WhatIs::Expression->new(
+    if (ref $options eq 'WhatIs::Expression') {
+        return WhatIs::Expression->new(
             options => $options->options
         );
     }
-    return DDG::GoodieRole::WhatIs::Expression->new(
+    return WhatIs::Expression->new(
         options => $options
     );
 }
 
 sub named {
     my ($name, $options) = @_;
-    return DDG::GoodieRole::WhatIs::Expression->new(
+    return WhatIs::Expression->new(
         options      => $options,
         capture_name => $name,
     );
@@ -156,19 +156,19 @@ sub invalidate {
 
 sub get_regex {
     my $self = shift;
-    return ref $self eq 'DDG::GoodieRole::WhatIs::Expression'
+    return ref $self eq 'WhatIs::Expression'
         ? $self->regex
         : $self;
 }
 
 sub is_expr {
     my $what = shift;
-    return ref $what eq 'DDG::GoodieRole::WhatIs::Expression';
+    return ref $what eq 'WhatIs::Expression';
 }
 
 sub expression {
     no strict 'refs';
-    my $name = qualify_to_ref(shift, qw(DDG::GoodieRole::WhatIs::Expression));
+    my $name = qualify_to_ref(shift, qw(WhatIs::Expression));
     my $body = shift;
     *{$name} = *{uc $name} = sub {
         my $self = shift;

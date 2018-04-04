@@ -1,4 +1,4 @@
-package DDG::GoodieRole::WhatIs::Modifiers;
+package WhatIs::Modifiers;
 # ABSTRACT: Defines the possible modifiers that can be used
 # with the 'WhatIs' GoodieRole.
 
@@ -10,8 +10,8 @@ use Moo;
 use List::MoreUtils qw(all);
 use List::Util qw(first);
 
-use DDG::GoodieRole::WhatIs::Expression qw(:EXPR);
-use DDG::GoodieRole::WhatIs::Modifier;
+use WhatIs::Expression qw(:EXPR);
+use WhatIs::Modifier;
 
 BEGIN {
     require Exporter;
@@ -36,7 +36,7 @@ sub new_modifier_spec {
 
 sub new_modifier {
     my $modifier_spec = shift;
-    return DDG::GoodieRole::WhatIs::Modifier->new(%$modifier_spec);
+    return WhatIs::Modifier->new(%$modifier_spec);
 }
 
 #######################################################################

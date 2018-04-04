@@ -1,15 +1,15 @@
-package DDG::GoodieRole::WhatIs;
+package WhatIs;
 # ABSTRACT: Role for query matching.
 
 use strict;
 use warnings;
 
 use Moo::Role;
-use DDG::GoodieRole::WhatIs::Matcher;
+use WhatIs::Matcher;
 
 # Custom matcher with no presets.
 sub wi {
-    return DDG::GoodieRole::WhatIs::Matcher->new(@_);
+    return WhatIs::Matcher->new(@_);
 }
 
 1;
@@ -18,14 +18,14 @@ __END__
 
 =head1 NAME
 
-DDG::GoodieRole::WhatIs - abstracts query matching
+WhatIs - abstracts query matching
 
 =head1 SYNOPSIS
 
 Including it in your Goodie:
 
     use DDG::Goodie;
-    with 'DDG::GoodieRole::WhatIs';
+    with 'WhatIs';
 
 Creating matchers:
 
@@ -45,7 +45,7 @@ Retrieving values:
 
 =head1 DESCRIPTION
 
-L<DDG::GoodieRole::WhatIs> aims to make writing new Goodies,
+L<WhatIs> aims to make writing new Goodies,
 as well as ensuring they are accessible, as easy as possible!
 It does this by reducing the need for complex regular expressions,
 instead allowing you to specify certain L</Groups> and L</Options>
@@ -501,7 +501,7 @@ The aim is for queries such as "How do I write X in Goatee?",
 
     use DDG::Goodie;
     # To be able to use 'WhatIs' we need import it!
-    with 'DDG::GoodieRole::WhatIs';
+    with 'WhatIs';
 
     # We don't know *exactly* where 'goatee' will turn up in our
     # query, so we use the 'any' trigger.

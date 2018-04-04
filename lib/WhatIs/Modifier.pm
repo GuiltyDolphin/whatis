@@ -1,4 +1,4 @@
-package DDG::GoodieRole::WhatIs::Modifier;
+package WhatIs::Modifier;
 # ABSTRACT: Changes the way in which a query is matched.
 
 use strict;

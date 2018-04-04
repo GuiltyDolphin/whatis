@@ -1,11 +1,11 @@
-package DDG::GoodieRole::WhatIs::Matcher;
+package WhatIs::Matcher;
 # ABSTRACT: Object that generates matchers for various forms of query.
 
 use strict;
 use warnings;
 
-use DDG::GoodieRole::WhatIs::Modifiers qw(get_modifiers);
-use DDG::GoodieRole::WhatIs::Modifier;
+use WhatIs::Modifiers qw(get_modifiers);
+use WhatIs::Modifier;
 
 use Moo;
 
