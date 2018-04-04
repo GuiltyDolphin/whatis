@@ -50,12 +50,11 @@ Retrieving values:
 
 =head1 DESCRIPTION
 
-L<WhatIs> aims to make writing new Goodies,
-as well as ensuring they are accessible, as easy as possible!
-It does this by reducing the need for complex regular expressions,
+L<WhatIs> reduces the need for complex regular expressions,
 instead allowing you to specify certain L</Groups> and L</Options>
-which represent properties of your Goodie, and then provides a simple
-interface through which matches can be performed.
+which represent properties of the queries to match, and provides
+a simple interface through which matches can be performed,
+and structured results retrieved.
 
 =head2 Matchers
 
