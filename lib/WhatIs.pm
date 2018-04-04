@@ -1,11 +1,17 @@
 package WhatIs;
-# ABSTRACT: Role for query matching.
+# ABSTRACT: Build complex regular expressions with ease.
 
 use strict;
 use warnings;
 
-use Moo::Role;
 use WhatIs::Matcher;
+
+BEGIN {
+    require Exporter;
+
+    our @ISA = qw(Exporter);
+    our @EXPORT_OK = qw(wi);
+}
 
 # Custom matcher with no presets.
 sub wi {

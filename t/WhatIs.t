@@ -5,14 +5,10 @@ use warnings;
 
 use Test::Most;
 
+use WhatIs;
+
 my %wi_valid_queries = ();
 subtest 'WhatIs' => sub {
-
-    { package WhatIsTester; use Moo; with 'WhatIs'; 1; }
-
-    subtest 'Initialization' => sub {
-        new_ok('WhatIsTester', [], 'Applied to a class');
-    };
 
 #######################################################################
 #                               Helpers                               #
@@ -35,7 +31,7 @@ subtest 'WhatIs' => sub {
 
     sub wi_with_test {
         my $options = shift;
-        my $wi = WhatIsTester::wi(%{$options});
+        my $wi = WhatIs::wi(%{$options});
         isa_ok($wi, 'WhatIs::Matcher', 'wi');
         return $wi;
     }
@@ -478,7 +474,7 @@ subtest 'WhatIs' => sub {
     );
 
     subtest 'Matcher::match' => sub {
-        my $matcher = WhatIsTester::wi(
+        my $matcher = WhatIs::wi(
             groups  => ['conversion'],
             options => {
                 to => qr/lang/i,
@@ -503,11 +499,11 @@ subtest 'WhatIs' => sub {
                 "'bar' and 'foo'" => ['foo', 'bar'],
             );
             while (my ($group, $groups) = each %invalid_group_sets) {
-                throws_ok { WhatIsTester::wi->( groups => $groups ) }
+                throws_ok { WhatIs::wi( groups => $groups ) }
                         qr/Unused groups $group/,
                         ('Should not be able to assign modifiers with groups ' . join ' and ', @{$groups});
             }
-            throws_ok { WhatIsTester::wi->( groups => [] ) }
+            throws_ok { WhatIs::wi( groups => [] ) }
                         qr/No groups specified/,
                         ('Should not accept empty groups');
         };
@@ -521,7 +517,7 @@ subtest 'WhatIs' => sub {
             );
             while (my ($req_option, $groupss) = each %invalid_option_sets) {
                 foreach my $groups (@{$groupss}) {
-                    throws_ok { WhatIsTester::wi->( groups => $groups ) }
+                    throws_ok { WhatIs::wi( groups => $groups ) }
                             (($req_option =~ /\bor\b/) ? qr/requires at least one of the $req_option options/
                             : qr/requires the $req_option option/),
                             "Groups [@{[join ', ', @{$groups}]}] should require the $req_option option to be set";
