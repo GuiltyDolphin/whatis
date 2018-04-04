@@ -3,7 +3,6 @@
 use strict;
 use warnings;
 
-use Test::MockTime qw( :all );
 use Test::Most;
 
 my %wi_valid_queries = ();
