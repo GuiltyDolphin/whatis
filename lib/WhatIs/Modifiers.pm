@@ -1,6 +1,5 @@
 package WhatIs::Modifiers;
-# ABSTRACT: Defines the possible modifiers that can be used
-# with the 'WhatIs' GoodieRole.
+# ABSTRACT: Defines the possible modifiers that can be used.
 
 use strict;
 use warnings;
