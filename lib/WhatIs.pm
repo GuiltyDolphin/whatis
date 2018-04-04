@@ -559,6 +559,6 @@ The aim is for queries such as "How do I write X in Goatee?",
 
 =head1 AUTHOR
 
-Ben Moon aka GuiltyDolphin E<lt>guiltydolphinE<64>gmail.comE<gt>
+Ben Moon aka GuiltyDolphin E<lt>softwareE<64>guiltydolphin.comE<gt>
 
 =cut
