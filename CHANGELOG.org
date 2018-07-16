@@ -2,6 +2,15 @@
 
 * Unreleased
 
+** Added
+
++ Proper licensing attribution
+
+** Changed
+
++ Updated code to work entirely independently of DuckDuckGo
+  infrastructure
+
 ** Fixed
 
 + Use of experimental features that are now forbidden
