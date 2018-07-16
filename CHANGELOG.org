@@ -1,0 +1,10 @@
+#+TITLE: Changelog
+
+* Unreleased
+
+* 0.1.0 - 2018-04-30
+
+** Added
+
++ Imported code from
+  https://github.com/duckduckgo/zeroclickinfo-goodies/pull/2644
