@@ -1,0 +1,5 @@
+# Documentation build files
+
+*.html
+*.pdf
+*.tex
