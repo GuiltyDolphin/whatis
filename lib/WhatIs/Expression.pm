@@ -73,7 +73,10 @@ sub add_to_stack {
 
 sub pop_stack {
     my $self = shift;
-    pop $self->_regex_stack;
+    my @stack = @{$self->_regex_stack};
+    my $val = pop @stack;
+    $self->{_regex_stack} = [@stack];
+    return $val;
 }
 
 sub append_to_regex {

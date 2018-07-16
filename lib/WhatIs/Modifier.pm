@@ -93,7 +93,7 @@ sub build_result {
     my %result;
     # Embedded options are of the form 'name__key', so we normalize
     # these to the form 'name => { key => ... }'.
-    while (my ($option, $value) = each $self->_options) {
+    while (my ($option, $value) = each %{$self->_options}) {
         if ($value->{use_hash}) {
             my %match_res = map {
                 ($_ =~ s/^${option}__//r) => $match_result{$_}
