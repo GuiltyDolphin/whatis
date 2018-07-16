@@ -9,6 +9,8 @@ use WhatIs::Matcher;
 BEGIN {
     require Exporter;
 
+    our $VERSION = 'v0.2.0';
+
     our @ISA = qw(Exporter);
     our @EXPORT_OK = qw(wi);
 }
