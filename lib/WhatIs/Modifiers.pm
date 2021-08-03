@@ -6,8 +6,7 @@ use warnings;
 
 use Moo;
 
-use List::MoreUtils qw(all);
-use List::Util qw(first);
+use List::Util qw(all first);
 
 use WhatIs::Expression qw(:EXPR);
 use WhatIs::Modifier;
@@ -211,7 +210,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-Modification Copyright (C) 2018  Ben Moon
+Modification Copyright (C) 2018, 2021  Ben Moon
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

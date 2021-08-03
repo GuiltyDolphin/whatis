@@ -16,8 +16,7 @@ BEGIN {
 
 use Symbol qw(qualify_to_ref);
 
-use List::MoreUtils qw(uniq first_index);
-use List::Util qw(first);
+use List::Util qw(first uniqstr);
 
 #######################################################################
 #                               Object                                #
@@ -285,7 +284,7 @@ expression or => sub {
             push @valid_alternatives, $alternative;
         }
     }
-    @req_options = uniq @req_options;
+    @req_options = uniqstr @req_options;
     if (@valid_alternatives) {
         my $regexes = join '|', @valid_alternatives;
         $self->append_to_regex(qr/(?:$regexes)/);
@@ -436,7 +435,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-Modification Copyright (C) 2018  Ben Moon
+Modification Copyright (C) 2018, 2021  Ben Moon
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
